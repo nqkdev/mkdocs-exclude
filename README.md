@@ -1,8 +1,10 @@
-# File exclude plugin for mkdocs
+# File include plugin for mkdocs
 
-`mkdocs-exclude` is a
+This repo was forked from mkdocs-exclude plugin.
+
+`mkdocs-include` is a
 [mkdocs plugin](http://www.mkdocs.org/user-guide/plugins/) that allows you
-to exclude files from your input using unix-style wildcards (globs) or
+to include files from your input using unix-style wildcards (globs) or
 regular expressions (regexes).
 
 This implements what people were asking for in some mkdocs bugs, such as
@@ -12,15 +14,15 @@ This implements what people were asking for in some mkdocs bugs, such as
 
 ## Quick start
 
-1. Install the module using pip: `pip3 install mkdocs-exclude`
+1. Install the module using pip: `pip3 install mkdocs-include`
 
 2. In your project, add a plugin configuration to `mkdocs.yml`:
 
    ```yaml
    plugins:
-     - exclude:
+     - include:
          glob:
-           - exclude/this/path/*
+           - include/this/path/*
            - "*.tmp"
            - "*.pdf"
            - "*.gz"

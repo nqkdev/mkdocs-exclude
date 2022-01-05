@@ -1,20 +1,31 @@
 import fnmatch
 import re
 import os
-import sys
 import mkdocs
 import mkdocs.plugins
 import mkdocs.structure.files
 
-class Exclude(mkdocs.plugins.BasePlugin):
-    """A mkdocs plugin that removes all matching files from the input list."""
+
+class Include(mkdocs.plugins.BasePlugin):
+    """A mkdocs plugin that adds all matching files from the input list."""
 
     config_scheme = (
+        ('ext', mkdocs.config.config_options.Type((str, list), default=[
+            ".md", ".markdown", ".mdown", ".mkdn", ".mkd", ".css",
+            ".js", ".javascript", ".html", ".htm", ".xml", ".json",
+            ".bmp", ".tif", ".tiff", ".gif", ".svg", ".jpeg",
+            ".jpg", ".jif", ".jfif", ".jp2", ".jpx", ".j2k",
+            ".j2c", ".fpx", ".pcd", ".png", ".pdf", "CNAME",
+            ".snippet", ".pages"
+        ])),
         ('glob', mkdocs.config.config_options.Type((str, list), default=None)),
         ('regex', mkdocs.config.config_options.Type((str, list), default=None)),
     )
 
     def on_files(self, files, config):
+        exts = self.config['ext'] or []
+        if not isinstance(exts, list):
+            exts = [exts]
         globs = self.config['glob'] or []
         if not isinstance(globs, list):
             globs = [globs]
@@ -22,14 +33,18 @@ class Exclude(mkdocs.plugins.BasePlugin):
         if not isinstance(regexes, list):
             regexes = [regexes]
         out = []
+
         def include(name):
+            if os.path.splitext(name)[1] in exts:
+                return True
             for g in globs:
                 if fnmatch.fnmatchcase(name, g):
-                    return False
+                    return True
             for r in regexes:
                 if re.match(r, name):
-                    return False
-            return True
+                    return True
+            return False
+
         for i in files:
             name = i.src_path
             if not include(name):
