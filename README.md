@@ -1,6 +1,6 @@
 # File include plugin for mkdocs
 
-This repo was forked from mkdocs-exclude plugin.
+This repo was forked from [mkdocs-exclude](https://github.com/apenwarr/mkdocs-exclude) plugin.
 
 `mkdocs-include` is a
 [mkdocs plugin](http://www.mkdocs.org/user-guide/plugins/) that allows you
@@ -17,7 +17,11 @@ This implements what people were asking for in some mkdocs bugs, such as
 1. Install the module using pip: `pip3 install mkdocs-include`
 
 2. In your project, add a plugin configuration to `mkdocs.yml`:
-
+   ```yaml
+   plugins:
+      - include
+   ```
+   or
    ```yaml
    plugins:
      - include:
